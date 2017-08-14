@@ -9,7 +9,7 @@ module.exports = function(path, opts, next){
   if (!opts) opts = {}
   if (!opts.format) opts.format = 'hex'
 
-  var imArgs = [path, 'test.jpg -scale "32x32" +dither -colors 32 -define histogram:unique-colors=true -format "%c" histogram:info:']
+  var imArgs = path +'-scale "32x32" +dither -colors 32 -define histogram:unique-colors=true -format "%c" histogram:info:'
 
   im.convert(imArgs, function(err, stdout){
     if (err) next(err)
