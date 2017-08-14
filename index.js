@@ -9,7 +9,7 @@ module.exports = function(path, opts, next){
   if (!opts) opts = {}
   if (!opts.format) opts.format = 'hex'
 
-  var imArgs = [path, '-scale', '32x32', '+dither', '-colors', '32', 'define', 'histogram:unique-colors=true', '-format', '"%c"', 'histogram:info:']
+  var imArgs = [path, '-scale', '32x32', '+dither', '-colors', '32', '-define', 'histogram:unique-colors=true', '-format', '"%c"', 'histogram:info:', '|', 'sort', '-nr', '|', 'head', '-1' '|', 'awk', '{ print $4 }']
 
   im.convert(imArgs, function(err, stdout){
     if (err) next(err)
@@ -19,7 +19,6 @@ module.exports = function(path, opts, next){
       hex: function(){ return require('rgb-hex').apply(this, rgb.split(',')) },
       rgb: function(){ return rgb.split(',') }
     }
-
     next(null, results[opts.format]())
   })
 }
